@@ -1,45 +1,31 @@
-import { useState, useEffect, FormEvent } from "react";
+import {FormEvent, useEffect, useState} from "react";
 import Modal from "@/components/Modal";
-import FormField, { FormFieldProps } from "@/components/FormField";
-import {
-  usePreferences,
-  PreferenceMap,
-  DEFAULT_PREFERENCES,
-} from "@/contexts/Preferences";
-import { useStatusMessages } from "@/contexts/StatusMessages";
-import { useEvents } from "@/contexts/Events";
-import { useNav } from "@/contexts/Nav";
-import { WEEK_DAYS } from "@/hooks/useWeekDays";
+import FormField, {FormFieldProps} from "@/components/FormField";
+import {DEFAULT_PREFERENCES, PreferenceMap, usePreferences,} from "@/contexts/Preferences";
+import {useStatusMessages} from "@/contexts/StatusMessages";
+import {useEvents} from "@/contexts/Events";
+import {useNav} from "@/contexts/Nav";
+import {WEEK_DAYS} from "@/hooks/useWeekDays";
 import useDeleteEvent from "@/hooks/useDeleteEvent";
 import SettingsIcon from "@/icons/settings";
-import { cn } from "@/shared/utils";
+import {cn} from "@/shared/utils";
 
 type SettingsProps = {
-  className?: string;
+    className?: string;
 };
 
 const COLOR_OPTIONS = [
-  "hotpink",
-  "lightblue",
-  "coral",
-  "slateblue",
-  "steelblue",
-  "darkorange",
-  "orchid",
-  "dodgerblue",
-  "firebrick",
-  "goldenrod",
-  "teal",
-  "royalblue",
+    {value: "white", label: "White"},
+    {value: "black", label: "Dark"},
 ];
 
 type SettingFormFieldProps = Partial<
-  Omit<FormFieldProps, "value" | "onChange" | "id">
+    Omit<FormFieldProps, "value" | "onChange" | "id">
 >;
 
 type NestedSettingFormFieldProps = {
-  legend: string;
-  fields: Record<string, SettingFormFieldProps>;
+    legend: string;
+    fields: Record<string, SettingFormFieldProps>;
 };
 
 const SettingFieldProps = {
@@ -52,7 +38,7 @@ const SettingFieldProps = {
     type: "text",
     label: "Color theme",
     element: "select",
-    options: COLOR_OPTIONS.map((color) => ({ value: color, label: color })),
+    options: COLOR_OPTIONS.map((color) => ({ value: color.value, label: color.label })),
     disabled: false,
   },
   "view-mode": {
@@ -98,16 +84,7 @@ const SettingFieldProps = {
     options: Array.from(
       new Set([
         navigator.language,
-        "en-US",
-        "en-GB",
-        "de-DE",
-        "fr-FR",
         "es-ES",
-        "sk-SK",
-        "cs-CZ",
-        "zh-CN",
-        "ja-JP",
-        "ko-KR",
       ]).values()
     ).map((locale) => ({
       value: locale,
@@ -117,27 +94,27 @@ const SettingFieldProps = {
 } satisfies Record<string, SettingFormFieldProps>;
 
 const NestedSettingFieldProps = {
-  "date-time-format": {
-    legend: "Date time format",
-    fields: {
-      dateStyle: {
-        label: "Date style",
-        element: "select",
-        options: ["long", "medium", "short"].map((style) => ({
-          value: style,
-          label: style,
-        })),
-      },
-      timeStyle: {
-        label: "Time style",
-        element: "select",
-        options: ["long", "medium", "short"].map((style) => ({
-          value: style,
-          label: style,
-        })),
-      },
+    "date-time-format": {
+        legend: "Date time format",
+        fields: {
+            dateStyle: {
+                label: "Date style",
+                element: "select",
+                options: ["long", "medium", "short"].map((style) => ({
+                    value: style,
+                    label: style,
+                })),
+            },
+            timeStyle: {
+                label: "Time style",
+                element: "select",
+                options: ["long", "medium", "short"].map((style) => ({
+                    value: style,
+                    label: style,
+                })),
+            },
+        },
     },
-  },
 } satisfies Record<string, NestedSettingFormFieldProps>;
 
 type SettingFieldKey = keyof typeof SettingFieldProps;
@@ -145,207 +122,207 @@ type NestedSettingFieldKey = keyof typeof NestedSettingFieldProps;
 
 const FORM_ID = "settings-form";
 
-export default function Settings({ className }: SettingsProps) {
-  const { settingsIsOpen, closeSettings, openSettings } = useNav();
+export default function Settings({className}: SettingsProps) {
+    const {settingsIsOpen, closeSettings, openSettings} = useNav();
 
-  const [isDeleting, setIsDeleting] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
-  const { events, refreshEvents } = useEvents();
-  const deleteEvent = useDeleteEvent();
+    const {events, refreshEvents} = useEvents();
+    const deleteEvent = useDeleteEvent();
 
-  const { preferences, setPreferences, resetPreferences } = usePreferences();
+    const {preferences, setPreferences, resetPreferences} = usePreferences();
 
-  const [formValues, setFormValues] =
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    useState<Record<string, any>>(preferences);
+    const [formValues, setFormValues] =
+        /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+        useState<Record<string, any>>(preferences);
 
-  const { addMessage } = useStatusMessages();
+    const {addMessage} = useStatusMessages();
 
-  const handleClose = () => {
-    setIsDeleting(false);
-    closeSettings();
-  };
-
-  const handleChange = (key: string, subKey?: string) => {
-    return (value: string, checked: boolean) => {
-      const resolvedValue =
-        SettingFieldProps[key as SettingFieldKey]?.type === "checkbox"
-          ? checked
-          : value;
-
-      setFormValues((prevValues) => ({
-        ...prevValues,
-        [key]: subKey
-          ? { ...prevValues[key], [subKey]: resolvedValue }
-          : resolvedValue,
-      }));
+    const handleClose = () => {
+        setIsDeleting(false);
+        closeSettings();
     };
-  };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setPreferences(formValues as PreferenceMap);
+    const handleChange = (key: string, subKey?: string) => {
+        return (value: string, checked: boolean) => {
+            const resolvedValue =
+                SettingFieldProps[key as SettingFieldKey]?.type === "checkbox"
+                    ? checked
+                    : value;
 
-    addMessage({
-      type: "success",
-      content: "Settings saved!",
-    });
+            setFormValues((prevValues) => ({
+                ...prevValues,
+                [key]: subKey
+                    ? {...prevValues[key], [subKey]: resolvedValue}
+                    : resolvedValue,
+            }));
+        };
+    };
 
-    closeSettings();
-  };
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setPreferences(formValues as PreferenceMap);
 
-  const handleReset = () => {
-    resetPreferences();
-    setFormValues(DEFAULT_PREFERENCES);
+        addMessage({
+            type: "success",
+            content: "Settings saved!",
+        });
 
-    addMessage({
-      type: "info",
-      content: "Settings were reset.",
-    });
+        closeSettings();
+    };
 
-    closeSettings();
-  };
+    const handleReset = () => {
+        resetPreferences();
+        setFormValues(DEFAULT_PREFERENCES);
 
-  const handleDeleteAllEvents = async () => {
-    const eventCount = events.length;
+        addMessage({
+            type: "info",
+            content: "Settings were reset.",
+        });
 
-    await Promise.all(events.map((event) => deleteEvent(event, true)));
+        closeSettings();
+    };
 
-    addMessage({
-      type: "warning",
-      content: `${eventCount} events were deleted.`,
-    });
+    const handleDeleteAllEvents = async () => {
+        const eventCount = events.length;
 
-    refreshEvents();
-    closeSettings();
-  };
+        await Promise.all(events.map((event) => deleteEvent(event, true)));
 
-  useEffect(() => {
-    setFormValues(preferences);
-  }, [preferences]);
+        addMessage({
+            type: "warning",
+            content: `${eventCount} events were deleted.`,
+        });
 
-  return (
-    <div className={cn("flex items-center justify-center", className)}>
-      <button
-        className="btn p-1.5"
-        aria-label="Open settings"
-        type="button"
-        onClick={openSettings}
-      >
-        <SettingsIcon />
-      </button>
-      <Modal
-        open={settingsIsOpen}
-        onClose={handleClose}
-        title={isDeleting ? "Delete all events" : "Settings"}
-        actions={
-          isDeleting ? (
-            <>
-              <button
-                className="btn"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsDeleting(false);
-                }}
-                type="button"
-              >
-                Cancel
-              </button>
-              <button
-                className="btn"
-                onClick={handleDeleteAllEvents}
-                type="button"
-              >
-                Yes
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                type="button"
-                className="btn bordered"
-                onClick={handleReset}
-              >
-                Reset
-              </button>
-              <button
-                type="submit"
-                form={FORM_ID}
-                className="btn surface ml-auto"
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                className="btn bordered"
-                onClick={handleClose}
-              >
-                Cancel
-              </button>
-            </>
-          )
-        }
-      >
-        {isDeleting ? (
-          <p>
-            Are you sure you want to delete all events? This action cannot be
-            undone!
-          </p>
-        ) : (
-          <>
-            <form id={FORM_ID} onSubmit={handleSubmit}>
-              {Object.entries(DEFAULT_PREFERENCES)
-                .filter(
-                  ([key]) =>
-                    !SettingFieldProps[key as SettingFieldKey]?.disabled
-                )
-                .map(([key, value]) => {
-                  if (key in NestedSettingFieldProps) {
-                    const castedKey = key as NestedSettingFieldKey;
+        refreshEvents();
+        closeSettings();
+    };
 
-                    return (
-                      <fieldset key={`settings-item-${key}`}>
-                        <legend>
-                          {NestedSettingFieldProps[castedKey].legend}
-                        </legend>
-                        {Object.keys(value).map((subKey) => (
-                          <FormField
-                            key={`settings-item-${key}-${subKey}`}
-                            id={`${key}.${subKey}`}
-                            value={formValues[key][subKey]}
-                            checked={Boolean(formValues[key][subKey])}
-                            onChange={handleChange(key, subKey)}
-                            {...NestedSettingFieldProps[castedKey].fields[
-                              subKey as keyof (typeof NestedSettingFieldProps)[typeof castedKey]["fields"]
-                            ]}
-                          />
-                        ))}
-                      </fieldset>
-                    );
-                  }
+    useEffect(() => {
+        setFormValues(preferences);
+    }, [preferences]);
 
-                  return (
-                    <FormField
-                      key={`settings-item-${key}`}
-                      id={key}
-                      value={formValues[key]}
-                      checked={Boolean(formValues[key])}
-                      onChange={handleChange(key)}
-                      {...SettingFieldProps[key as SettingFieldKey]}
-                    />
-                  );
-                })}
-            </form>
+    return (
+        <div className={cn("flex items-center justify-center", className)}>
             <button
-              className="btn bordered self-start"
-              onClick={() => setIsDeleting(true)}
-              type="button"
+                className="btn p-1.5"
+                aria-label="Open settings"
+                type="button"
+                onClick={openSettings}
             >
-              Delete all events
+                <SettingsIcon/>
             </button>
-          </>
-        )}
-      </Modal>
-    </div>
-  );
+            <Modal
+                open={settingsIsOpen}
+                onClose={handleClose}
+                title={isDeleting ? "Delete all events" : "Settings"}
+                actions={
+                    isDeleting ? (
+                        <>
+                            <button
+                                className="btn"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setIsDeleting(false);
+                                }}
+                                type="button"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="btn"
+                                onClick={handleDeleteAllEvents}
+                                type="button"
+                            >
+                                Yes
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <button
+                                type="button"
+                                className="btn bordered"
+                                onClick={handleReset}
+                            >
+                                Reset
+                            </button>
+                            <button
+                                type="submit"
+                                form={FORM_ID}
+                                className="btn surface ml-auto"
+                            >
+                                Save
+                            </button>
+                            <button
+                                type="button"
+                                className="btn bordered"
+                                onClick={handleClose}
+                            >
+                                Cancel
+                            </button>
+                        </>
+                    )
+                }
+            >
+                {isDeleting ? (
+                    <p>
+                        Are you sure you want to delete all events? This action cannot be
+                        undone!
+                    </p>
+                ) : (
+                    <>
+                        <form id={FORM_ID} onSubmit={handleSubmit}>
+                            {Object.entries(DEFAULT_PREFERENCES)
+                                .filter(
+                                    ([key]) =>
+                                        !SettingFieldProps[key as SettingFieldKey]?.disabled
+                                )
+                                .map(([key, value]) => {
+                                    if (key in NestedSettingFieldProps) {
+                                        const castedKey = key as NestedSettingFieldKey;
+
+                                        return (
+                                            <fieldset key={`settings-item-${key}`}>
+                                                <legend>
+                                                    {NestedSettingFieldProps[castedKey].legend}
+                                                </legend>
+                                                {Object.keys(value).map((subKey) => (
+                                                    <FormField
+                                                        key={`settings-item-${key}-${subKey}`}
+                                                        id={`${key}.${subKey}`}
+                                                        value={formValues[key][subKey]}
+                                                        checked={Boolean(formValues[key][subKey])}
+                                                        onChange={handleChange(key, subKey)}
+                                                        {...NestedSettingFieldProps[castedKey].fields[
+                                                            subKey as keyof (typeof NestedSettingFieldProps)[typeof castedKey]["fields"]
+                                                            ]}
+                                                    />
+                                                ))}
+                                            </fieldset>
+                                        );
+                                    }
+
+                                    return (
+                                        <FormField
+                                            key={`settings-item-${key}`}
+                                            id={key}
+                                            value={formValues[key]}
+                                            checked={Boolean(formValues[key])}
+                                            onChange={handleChange(key)}
+                                            {...SettingFieldProps[key as SettingFieldKey]}
+                                        />
+                                    );
+                                })}
+                        </form>
+                        <button
+                            className="btn bordered self-start"
+                            onClick={() => setIsDeleting(true)}
+                            type="button"
+                        >
+                            Delete all events
+                        </button>
+                    </>
+                )}
+            </Modal>
+        </div>
+    );
 }

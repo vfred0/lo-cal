@@ -3,413 +3,415 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    --kbq-background-white: hsla(229, 15%, 90%, 100%);
+    --kbq-background-black: hsla(229, 15%, 12%, 100%);
 
-  color-scheme: light dark;
+    color-scheme: var(--kbq-background-white) var(--kbq-background-black);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  --day-min-height: calc(80vh - 4rem);
-  --base-border-width: 1px;
+    --day-min-height: calc(80vh - 4rem);
+    --base-border-width: 1px;
 
-  --base-color: hotpink;
-  --base-color-mix-space: oklab;
+    --base-color: var(--kbq-background-black) 10%;
+    --base-color-mix-space: oklab;
 
-  --base-color-contrast-color-mix: black 30%;
-  --base-color-contrast-mix: color-mix(
-    in var(--base-color-mix-space),
-    var(--base-color),
-    var(--base-color-contrast-color-mix)
-  );
+    --base-color-contrast-color-mix: black 30%;
+    --base-color-contrast-mix: color-mix(
+            in var(--base-color-mix-space),
+            var(--base-color),
+            var(--base-color-contrast-color-mix)
+    );
 
-  --base-color-contrast-invert-color-mix: white 40%;
-  --base-color-contrast-invert-mix: color-mix(
-    in var(--base-color-mix-space),
-    var(--base-color),
-    var(--base-color-contrast-invert-color-mix)
-  );
+    --base-color-contrast-invert-color-mix: var(--kbq-background-white) 40%;
+    --base-color-contrast-invert-mix: color-mix(
+            in var(--base-color-mix-space),
+            var(--base-color),
+            var(--base-color-contrast-invert-color-mix)
+    );
 
-  --background-color-color-mix: white 98%;
-  --background-color-mix: color-mix(
-    in var(--base-color-mix-space),
-    var(--base-color),
-    var(--background-color-color-mix)
-  );
+    --background-color-color-mix: var(--kbq-background-white) 98%;
+    --background-color-mix: color-mix(
+            in var(--base-color-mix-space),
+            var(--base-color),
+            var(--background-color-color-mix)
+    );
 
-  --bc-cm: var(--base-color-contrast-mix);
-  --bc-cim: var(--base-color-contrast-invert-mix);
-  --bg-cm: var(--background-color-mix);
+    --bc-cm: var(--base-color-contrast-mix);
+    --bc-cim: var(--base-color-contrast-invert-mix);
+    --bg-cm: var(--background-color-mix);
 
-  accent-color: var(--base-color);
-  background-color: var(--bg-cm);
+    accent-color: var(--base-color);
+    background-color: var(--bg-cm);
 
-  @media (prefers-color-scheme: dark) {
-    --background-color-color-mix: black 76%;
-  }
+    @media (prefers-color-scheme: dark) {
+        --background-color-color-mix: var(--kbq-background-black) 10%;
+    }
 
-  @media (min-width: 640px) {
-    --base-border-width: 1.5px;
-  }
+    @media (min-width: 640px) {
+        --base-border-width: 1.5px;
+    }
 }
 
 ::selection {
-  background-color: var(--bc-cim);
+    background-color: var(--bc-cim);
 }
 
 @media (prefers-color-scheme: dark) {
-  ::selection {
-    background-color: var(--bc-cm);
-  }
+    ::selection {
+        background-color: var(--kbq-background-white);
+    }
 }
 
 *,
 *::before,
 *::after {
-  --border-width: var(--base-border-width);
-  --color-mix-space: oklab;
+    --border-width: var(--base-border-width);
+    --color-mix-space: oklab;
 
-  --text-base-color: var(--base-color);
-  --text-color-mix: black 60%;
-  --text: color-mix(
-    in var(--color-mix-space),
-    var(--text-base-color),
-    var(--text-color-mix)
-  );
+    --text-base-color: var(--base-color);
+    --text-color-mix: black 60%;
+    --text: color-mix(
+            in var(--color-mix-space),
+            var(--text-base-color),
+            var(--text-color-mix)
+    );
 
-  --surface-base-color: var(--base-color);
-  --surface-color-mix: white 85%;
-  --surface: color-mix(
-    in var(--color-mix-space),
-    var(--surface-base-color),
-    var(--surface-color-mix)
-  );
+    --surface-base-color: var(--base-color);
+    --surface-color-mix: var(--kbq-background-white) 85%;
+    --surface: color-mix(
+            in var(--color-mix-space),
+            var(--surface-base-color),
+            var(--surface-color-mix)
+    );
 
-  --border-base-color: var(--base-color);
-  --border-color-mix: black 40%;
-  --border: color-mix(
-    in var(--color-mix-space),
-    var(--border-base-color),
-    var(--border-color-mix)
-  );
+    --border-base-color: var(--base-color);
+    --border-color-mix: black 10%;
+    --border: color-mix(
+            in var(--color-mix-space),
+            var(--border-base-color),
+            var(--border-color-mix)
+    );
 
-  --surface-alpha: 1;
-  --text-alpha: 1;
-  --border-alpha: 0.5;
-  --shadow-offset: 4px;
+    --surface-alpha: 1;
+    --text-alpha: 1;
+    --border-alpha: 0.5;
+    --shadow-offset: 4px;
 
-  --text-mix-transparency: calc(100% - var(--text-alpha) * 100%);
-  --surface-mix-transparency: calc(100% - var(--surface-alpha) * 100%);
-  --border-mix-transparency: calc(100% - var(--border-alpha) * 100%);
+    --text-mix-transparency: calc(100% - var(--text-alpha) * 100%);
+    --surface-mix-transparency: calc(100% - var(--surface-alpha) * 100%);
+    --border-mix-transparency: calc(100% - var(--border-alpha) * 100%);
 
-  --text-mix: color-mix(
-    in srgb,
-    var(--text),
-    transparent var(--text-mix-transparency)
-  );
-  --surface-mix: color-mix(
-    in srgb,
-    var(--surface),
-    transparent var(--surface-mix-transparency)
-  );
-  --border-mix: color-mix(
-    in srgb,
-    var(--border),
-    transparent var(--border-mix-transparency)
-  );
+    --text-mix: color-mix(
+            in srgb,
+            var(--text),
+            transparent var(--text-mix-transparency)
+    );
+    --surface-mix: color-mix(
+            in srgb,
+            var(--surface),
+            transparent var(--surface-mix-transparency)
+    );
+    --border-mix: color-mix(
+            in srgb,
+            var(--border),
+            transparent var(--border-mix-transparency)
+    );
 
-  --shadow: 0 0 0 var(--border-width) var(--border-mix),
+    --shadow: 0 0 0 var(--border-width) var(--border-mix),
     var(--shadow-offset) var(--shadow-offset) 0 0 var(--border-mix);
 
-  color: var(--text-mix);
-  border-color: var(--border-mix);
+    color: var(--text-mix);
+    border-color: var(--border-mix);
 
-  &:is(:focus-visible, .shadow) {
-    --border-alpha: 1;
+    &:is(:focus-visible, .shadow) {
+        --border-alpha: 1;
 
-    outline: 0;
-    box-shadow: var(--shadow);
-  }
+        outline: 0;
+        box-shadow: var(--shadow);
+    }
 
-  &.surface {
-    background-color: var(--surface-mix);
-  }
+    &.surface {
+        background-color: var(--surface-mix);
+    }
 
-  &.bordered {
-    border-width: var(--border-width);
-  }
+    &.bordered {
+        border-width: var(--border-width);
+    }
 
-  @media (prefers-color-scheme: dark) {
-    --text-color-mix: white 40%;
-    --surface-color-mix: black 72%;
-    --border-color-mix: black 30%;
-  }
+    @media (prefers-color-scheme: dark) {
+        --text-color-mix: var(--kbq-background-white) 100%;
+        --surface-color-mix: var(--kbq-background-black) 100%;
+        --border-color-mix: var(--kbq-background-black) 100%;
+    }
 }
 
 @layer base {
-  h1,
-  .h1 {
-    @apply text-3xl sm:text-4xl font-bold;
-  }
-
-  h2,
-  .h2 {
-    @apply text-2xl sm:text-3xl font-semibold;
-  }
-
-  h3,
-  .h3 {
-    @apply text-xl sm:text-2xl font-semibold;
-  }
-
-  h4,
-  .h4 {
-    @apply text-lg sm:text-xl font-semibold;
-  }
-
-  h5,
-  .h5 {
-    @apply text-base sm:text-lg font-semibold;
-  }
-
-  h6,
-  .h6 {
-    @apply text-sm sm:text-base font-semibold;
-  }
-
-  a {
-    border-radius: 0.25em;
-  }
-
-  button {
-    border-radius: 0.75em;
-  }
-
-  form {
-    display: grid;
-    gap: 1rem;
-  }
-
-  fieldset {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    border-width: var(--border-width);
-    padding: 0.5rem 0.75rem 1rem;
-    border-radius: 0.5rem;
-
-    & > legend {
-      font-weight: 500;
-      padding-inline: 0.25rem;
-      width: fit-content;
+    h1,
+    .h1 {
+        @apply text-3xl sm:text-4xl font-bold;
     }
-  }
+
+    h2,
+    .h2 {
+        @apply text-2xl sm:text-3xl font-semibold;
+    }
+
+    h3,
+    .h3 {
+        @apply text-xl sm:text-2xl font-semibold;
+    }
+
+    h4,
+    .h4 {
+        @apply text-lg sm:text-xl font-semibold;
+    }
+
+    h5,
+    .h5 {
+        @apply text-base sm:text-lg font-semibold;
+    }
+
+    h6,
+    .h6 {
+        @apply text-sm sm:text-base font-semibold;
+    }
+
+    a {
+        border-radius: 0.25em;
+    }
+
+    button {
+        border-radius: 0.75em;
+    }
+
+    form {
+        display: grid;
+        gap: 1rem;
+    }
+
+    fieldset {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        border-width: var(--border-width);
+        padding: 0.5rem 0.75rem 1rem;
+        border-radius: 0.5rem;
+
+        & > legend {
+            font-weight: 500;
+            padding-inline: 0.25rem;
+            width: fit-content;
+        }
+    }
 }
 
 @layer components {
-  .link {
-    @apply underline;
-  }
-
-  .separator {
-    --thickness: 2px;
-
-    display: inline-block;
-    width: var(--thickness);
-    height: 100%;
-    border-radius: 100vw;
-    color: color-mix(in srgb, currentColor, transparent 85%);
-    background-color: currentColor;
-    border: 0;
-
-    &.horizontal {
-      width: 100%;
-      max-width: 20ch;
-      height: var(--thickness);
+    .link {
+        @apply underline;
     }
-  }
 
-  .date-note {
-    --text-alpha: 0.8;
-    @apply text-[0.5rem] @[4rem]:text-xs @[10rem]:text-sm uppercase font-semibold;
-  }
+    .separator {
+        --thickness: 2px;
 
-  .btn {
-    --px: 1em;
-    --py: 0.5em;
-    --br: 0.75em;
-    --gap: 0.5em;
-    --surface-base-color: var(--bc-cm);
+        display: inline-block;
+        width: var(--thickness);
+        height: 100%;
+        border-radius: 100vw;
+        color: color-mix(in srgb, currentColor, transparent 85%);
+        background-color: currentColor;
+        border: 0;
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--gap);
-    padding: var(--py) var(--px);
-    border-radius: var(--br);
-    font-size: inherit;
-    font-weight: 500;
-    line-height: 1;
+        &.horizontal {
+            width: 100%;
+            max-width: 20ch;
+            height: var(--thickness);
+        }
+    }
+
+    .date-note {
+        --text-alpha: 0.8;
+        @apply text-[0.5rem] @[4rem]:text-xs @[10rem]:text-sm uppercase font-semibold;
+    }
+
+    .btn {
+        --px: 1em;
+        --py: 0.5em;
+        --br: 0.75em;
+        --gap: 0.5em;
+        --surface-base-color: var(--bc-cm);
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--gap);
+        padding: var(--py) var(--px);
+        border-radius: var(--br);
+        font-size: inherit;
+        font-weight: 500;
+        line-height: 1;
+
+        @media (prefers-color-scheme: dark) {
+            border-width: var(--border-width);
+        }
+    }
+
+    .modal[open] {
+        --br: 1rem;
+        --px: 1rem;
+        --py: 1rem;
+        --backdrop-color-mix: black 70%;
+        --backdrop-alpha: 0.6;
+        --backdrop-transparency: calc(100% - var(--backdrop-alpha) * 100%);
+
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        inset: auto 0 0 0;
+        border-top-left-radius: var(--br);
+        border-top-right-radius: var(--br);
+
+        & > header {
+            --surface-alpha: 0.9;
+
+            @apply backdrop-blur-sm;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+            padding: var(--py) var(--px);
+            position: sticky;
+            top: 0;
+            background-color: var(--surface-mix);
+            z-index: 100;
+        }
+
+        & > footer {
+            --surface-alpha: 0.9;
+
+            @apply backdrop-blur-sm;
+
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding: var(--py) var(--px) calc(var(--py) + 0.5rem);
+            position: sticky;
+            bottom: 0;
+            background-color: var(--surface-mix);
+            z-index: 100;
+        }
+
+        & > hr {
+            align-self: center;
+        }
+
+        & > .modal-content {
+            display: flex;
+            gap: 1.25rem;
+            flex-direction: column;
+            padding: var(--py) var(--px);
+        }
+
+        &::backdrop {
+            background-color: color-mix(
+                    in srgb,
+                    color-mix(
+                            in var(--base-color-mix-space),
+                            var(--base-color),
+                            var(--backdrop-color-mix)
+                    ),
+                    transparent var(--backdrop-transparency)
+            );
+        }
+
+        @media (prefers-color-scheme: dark) {
+            --backdrop-color-mix: var(--kbq-background-white) 30%;
+            --backdrop-alpha: 0.6;
+        }
+
+        @media (min-width: 640px) {
+            --offset: 1rem;
+            inset: var(--offset);
+            max-width: min(calc(100% - 2 * var(--offset)), 54ch);
+            min-width: 48ch;
+            width: fit-content;
+            border-bottom-left-radius: var(--br);
+            border-bottom-right-radius: var(--br);
+            margin: auto;
+        }
+    }
+
+    .form-field {
+        display: grid;
+        gap: 0.25rem;
+
+        &:has(input[type="checkbox"]) {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+
+            & label {
+                order: 1;
+                cursor: pointer;
+            }
+        }
+
+        & :is(input, textarea, select) {
+            --surface-color-mix: var(--kbq-background-white) 95%;
+
+            @apply px-3 py-2 rounded-md md:rounded-lg;
+
+            appearance: none;
+            width: 100%;
+            min-width: 0;
+            min-height: 2em;
+            height: 100%;
+            line-height: 1.5;
+            background-color: var(--surface-mix);
+            color: var(--text-mix);
+
+            &::placeholder,
+            &::-webkit-input-placeholder {
+                color: color-mix(in srgb, var(--text-mix), transparent 50%);
+            }
+
+            &::-webkit-calendar-picker-indicator {
+                cursor: pointer;
+            }
+
+            &[type="checkbox"] {
+                aspect-ratio: 1;
+                width: 1lh;
+                min-height: 0;
+                padding: 0;
+                margin-block: auto;
+                border-width: var(--border-width);
+            }
+        }
+
+        & :is(textarea) {
+            resize: vertical;
+        }
+
+        & :is(select, input[type="checkbox"]) {
+            cursor: pointer;
+        }
+    }
 
     @media (prefers-color-scheme: dark) {
-      border-width: var(--border-width);
+        .form-field :is(input, textarea, select) {
+            --surface-color-mix: black 80%;
+        }
     }
-  }
-
-  .modal[open] {
-    --br: 1rem;
-    --px: 1rem;
-    --py: 1rem;
-    --backdrop-color-mix: black 70%;
-    --backdrop-alpha: 0.6;
-    --backdrop-transparency: calc(100% - var(--backdrop-alpha) * 100%);
-
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    margin: 0;
-    width: 100%;
-    max-width: 100%;
-    inset: auto 0 0 0;
-    border-top-left-radius: var(--br);
-    border-top-right-radius: var(--br);
-
-    & > header {
-      --surface-alpha: 0.9;
-
-      @apply backdrop-blur-sm;
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5rem;
-      padding: var(--py) var(--px);
-      position: sticky;
-      top: 0;
-      background-color: var(--surface-mix);
-      z-index: 100;
-    }
-
-    & > footer {
-      --surface-alpha: 0.9;
-
-      @apply backdrop-blur-sm;
-
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      padding: var(--py) var(--px) calc(var(--py) + 0.5rem);
-      position: sticky;
-      bottom: 0;
-      background-color: var(--surface-mix);
-      z-index: 100;
-    }
-
-    & > hr {
-      align-self: center;
-    }
-
-    & > .modal-content {
-      display: flex;
-      gap: 1.25rem;
-      flex-direction: column;
-      padding: var(--py) var(--px);
-    }
-
-    &::backdrop {
-      background-color: color-mix(
-        in srgb,
-        color-mix(
-          in var(--base-color-mix-space),
-          var(--base-color),
-          var(--backdrop-color-mix)
-        ),
-        transparent var(--backdrop-transparency)
-      );
-    }
-
-    @media (prefers-color-scheme: dark) {
-      --backdrop-color-mix: white 30%;
-      --backdrop-alpha: 0.6;
-    }
-
-    @media (min-width: 640px) {
-      --offset: 1rem;
-      inset: var(--offset);
-      max-width: min(calc(100% - 2 * var(--offset)), 54ch);
-      min-width: 48ch;
-      width: fit-content;
-      border-bottom-left-radius: var(--br);
-      border-bottom-right-radius: var(--br);
-      margin: auto;
-    }
-  }
-
-  .form-field {
-    display: grid;
-    gap: 0.25rem;
-
-    &:has(input[type="checkbox"]) {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-
-      & label {
-        order: 1;
-        cursor: pointer;
-      }
-    }
-
-    & :is(input, textarea, select) {
-      --surface-color-mix: white 95%;
-
-      @apply px-3 py-2 rounded-md md:rounded-lg;
-
-      appearance: none;
-      width: 100%;
-      min-width: 0;
-      min-height: 2em;
-      height: 100%;
-      line-height: 1.5;
-      background-color: var(--surface-mix);
-      color: var(--text-mix);
-
-      &::placeholder,
-      &::-webkit-input-placeholder {
-        color: color-mix(in srgb, var(--text-mix), transparent 50%);
-      }
-
-      &::-webkit-calendar-picker-indicator {
-        cursor: pointer;
-      }
-
-      &[type="checkbox"] {
-        aspect-ratio: 1;
-        width: 1lh;
-        min-height: 0;
-        padding: 0;
-        margin-block: auto;
-        border-width: var(--border-width);
-      }
-    }
-
-    & :is(textarea) {
-      resize: vertical;
-    }
-
-    & :is(select, input[type="checkbox"]) {
-      cursor: pointer;
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .form-field :is(input, textarea, select) {
-      --surface-color-mix: black 80%;
-    }
-  }
 }

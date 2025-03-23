@@ -26,7 +26,7 @@ export type PreferenceMap = {
 
 export const DEFAULT_PREFERENCES: PreferenceMap = {
   "show-welcome-message": true,
-  "base-color": "hotpink",
+  "base-color": "white",
   "view-mode": "month",
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   "last-viewed-date": new Date().toISOString(),

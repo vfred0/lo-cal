@@ -94,6 +94,7 @@ export async function updateEvent(event: Event): Promise<void> {
 
   await wrapRequest(cursor.update(event));
   await wrapTransaction(tx);
+  console.log("Event updated.", event);
 }
 
 export async function deleteEvent(event: Event): Promise<void> {
