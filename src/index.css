@@ -16,6 +16,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
+
     --day-min-height: calc(80vh - 4rem);
     --base-border-width: 1px;
 
@@ -336,7 +337,7 @@
         }
 
         @media (prefers-color-scheme: dark) {
-            --backdrop-color-mix: var(--kbq-background-white) 30%;
+            --backdrop-color-mix: var(--kbq-background-black) 30%;
             --backdrop-alpha: 0.6;
         }
 
@@ -411,7 +412,7 @@
 
     @media (prefers-color-scheme: dark) {
         .form-field :is(input, textarea, select) {
-            --surface-color-mix: black 80%;
+            --surface-color-mix: hsla(229, 15%, 12%, 80%) 10%;
         }
     }
 }
