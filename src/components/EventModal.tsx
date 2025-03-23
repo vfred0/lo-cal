@@ -1,6 +1,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import Modal from "@/components/Modal";
 import FormField from "@/components/FormField";
+import TechnicianSelector from "@/components/TechnicianSelector";
 import { usePreference } from "@/contexts/Preferences";
 import { useEvents } from "@/contexts/Events";
 import {
@@ -38,6 +39,7 @@ function getEventDefaultValues(
     description: event?.description || "",
     location: event?.location || "",
     url: event?.url || "",
+    technicianId: event?.technicianId || "",
   };
 }
 
@@ -65,6 +67,13 @@ export default function EventModal({ event, open, onClose }: EventModalProps) {
         [key]: value || checked || "",
       }));
     };
+  };
+
+  const handleTechnicianChange = (technicianId: string) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      technicianId,
+    }));
   };
 
   const handleSubmit = async (formEvent: FormEvent<HTMLFormElement>) => {
@@ -197,6 +206,13 @@ export default function EventModal({ event, open, onClose }: EventModalProps) {
               value={formValues?.start}
               onChange={handleFormFieldChange("start")}
             />
+            <div className="form-field">
+              <label htmlFor="technician">Technician</label>
+              <TechnicianSelector 
+                value={formValues?.technicianId} 
+                onChange={handleTechnicianChange} 
+              />
+            </div>
             <FormField
               element="textarea"
               label="Description"

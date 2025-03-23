@@ -1,4 +1,9 @@
-export type Event = {
+export interface Technician {
+  id: string;
+  name: string;
+}
+
+export interface Event {
   id: IDBValidKey;
   completed?: boolean;
   summary: string;
@@ -7,6 +12,7 @@ export type Event = {
   start: string;
   end: string;
   url?: string;
+  technicianId?: string;
 };
 
 export type EventCreateInput = Omit<Event, "id">;

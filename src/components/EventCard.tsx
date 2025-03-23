@@ -10,6 +10,13 @@ import MapPin from "@/icons/map-pin";
 import LinkIcon from "@/icons/link";
 import { cn } from "@/shared/utils";
 
+// Default technicians mapping to display names in the card
+const TECHNICIAN_NAMES: Record<string, string> = {
+  "tech-1": "John Doe",
+  "tech-2": "Jane Smith",
+  "tech-3": "Alex Johnson",
+};
+
 type EventCardProps = {
   event: CalendarEvent;
   onClick?: () => void;
@@ -42,6 +49,9 @@ export default function EventCard({ event, onClick }: EventCardProps) {
   useEffect(() => {
     setIsCompleted(event.completed);
   }, [event.completed]);
+
+  // Get technician name for display
+  const technicianName = event.technicianId ? TECHNICIAN_NAMES[event.technicianId] : null;
 
   return (
     <article
@@ -81,23 +91,35 @@ export default function EventCard({ event, onClick }: EventCardProps) {
             }}
           />
         </div>
-        <h3
-          className={cn(
-            "text-[0.375rem] @[2rem]:text-[0.5rem] @[4rem]:text-[0.675rem]",
-            "leading-[1] line-clamp-1",
-            "@xs:text-sm @sm:text-base @sm:line-clamp-2",
-            event.completed && "line-through"
-          )}
-        >
-          <span
+        <div className="flex flex-col @xs:flex-row @xs:items-center @xs:gap-2">
+          <h3
             className={cn(
-              "inline-block @[9rem]:hidden w-[0.5lh] mr-[0.125rem] mb-[0.125lh]",
-              "aspect-square bg-current rounded-full"
+              "text-[0.375rem] @[2rem]:text-[0.5rem] @[4rem]:text-[0.675rem]",
+              "leading-[1] line-clamp-1",
+              "@xs:text-sm @sm:text-base @sm:line-clamp-2",
+              event.completed && "line-through"
             )}
-            role="presentation"
-          />
-          {event.summary}
-        </h3>
+          >
+            <span
+              className={cn(
+                "inline-block @[9rem]:hidden w-[0.5lh] mr-[0.125rem] mb-[0.125lh]",
+                "aspect-square bg-current rounded-full"
+              )}
+              role="presentation"
+            />
+            {event.summary}
+          </h3>
+          {technicianName && (
+            <span className={cn(
+              "text-[0.375rem] @[2rem]:text-[0.5rem] @[4rem]:text-[0.575rem]",
+              "@xs:text-xs @sm:text-sm",
+              "px-1 py-0.5 rounded-full bg-opacity-20 bg-blue-500 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
+              "inline-flex items-center justify-center mt-0.5 @xs:mt-0"
+            )}>
+              {technicianName}
+            </span>
+          )}
+        </div>
       </div>
       <p className="hidden @xs:line-clamp-1 @sm:line-clamp-2 @md:line-clamp-3">
         {event.description}
@@ -117,7 +139,7 @@ export default function EventCard({ event, onClick }: EventCardProps) {
             title={event.location}
           >
             <MapPin className="w-[1em] h-[1em]" />
-            <span
+            <span 
               className={cn(
                 "hidden text-ellipsis overflow-hidden whitespace-nowrap",
                 "@xs:inline @xs:max-w-[20ch] @sm:max-w-[30ch]"
